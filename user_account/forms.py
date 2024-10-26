@@ -9,14 +9,17 @@ input_class = "bg-gray-50 border border-black-300 text-gray-900 text-sm rounded-
 class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'mailing_address', 'image']
     
     username = forms.CharField(widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Username'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'First Name'}))
+    middle_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Middle Name'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Last Name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Email Address'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Confirm Password'}))
+    mailing_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Address'}))
+    image = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Upload Profile Picture'}))
 
 
 class CustomUserLoginForm(AuthenticationForm):
