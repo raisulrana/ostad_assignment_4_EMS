@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <title>Sign Up</title>
+  </head>
+
+  <body>
+    <div class="flex items-center justify-center min-h-screen">
+      <form class="max-w-sm mx-auto" method="POST" style="width: 50%;">
+        <h1>{{ type }} Page</h1>
+        {% csrf_token %}
+        <div class="mb-5">
+          <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+          {{ register_form.username }}
+          {% if register_form.username.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.username.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-5">
+          <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+          {{ register_form.first_name }}
+          {% if register_form.first_name.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.first_name.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-5">
+          <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+          {{ register_form.last_name }}
+          {% if register_form.last_name.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.last_name.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-5">
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+          {{ register_form.email }}
+          {% if register_form.email.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.email.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-5">
+          <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+          {{ register_form.password1 }}
+          {% if register_form.password1.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.password1.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-5">
+          <label for="password2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+          {{ register_form.password2 }}
+          {% if register_form.password2.errors %}
+            <div class="text-red-500 text-xs">{{ register_form.password2.errors }}</div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
