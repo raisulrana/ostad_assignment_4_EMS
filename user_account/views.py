@@ -7,38 +7,46 @@ from .models import UserProfile
 # Create your views here.
 
 
-def user_registration(request):
-    if request.method == 'POST':
-        register_form = RegistrationForm(request.POST)
-        if register_form.is_valid():
-            user = register_form.save()
-            # Create a new user profile for the user
-            user_profile = UserProfile(user=user)
-            user_profile.username = request.POST.get('username')
-            user_profile.first_name = request.POST.get('first_name')
-            user_profile.middle_name = request.POST.get('middle_name')
-            user_profile.last_name = request.POST.get('last_name')
-            user_profile.email_address = request.POST.get('email')
-            user_profile.mailing_address = request.POST.get('mailing_address')
-            if register_form.cleaned_data.get('image'):
-                user_profile.image = register_form.cleaned_data.get('image')
-            user_profile.save()
-            return redirect('user_login')
-    else:
-        register_form = RegistrationForm()
-    return render(request, 'user_account/user_registration.html', {'register_form': register_form, 'type': 'Register'})
-
-
 # def user_registration(request):
 #     if request.method == 'POST':
 #         register_form = RegistrationForm(request.POST)
 #         if register_form.is_valid():
-#             register_form.save()
+#             user = register_form.save()
+#             # Create a new user profile for the user
+#             user_profile = UserProfile(user=user)
+#             user_profile.username = request.POST.get('username')
+#             user_profile.first_name = request.POST.get('first_name')
+#             user_profile.middle_name = request.POST.get('middle_name')
+#             user_profile.last_name = request.POST.get('last_name')
+#             user_profile.email_address = request.POST.get('email')
+#             user_profile.mailing_address = request.POST.get('mailing_address')
+#             if register_form.cleaned_data.get('image'):
+#                 user_profile.image = register_form.cleaned_data.get('image')
+#             user_profile.save()
 #             return redirect('user_login')
 #     else:
 #         register_form = RegistrationForm()
-
 #     return render(request, 'user_account/user_registration.html', {'register_form': register_form, 'type': 'Register'})
+
+
+def user_registration(request):
+    if request.method == 'POST':
+        register_form = RegistrationForm(request.POST, request.FILES)
+        if register_form.is_valid():
+            register_form.save()
+            return redirect('user_login')
+    else:
+        register_form = RegistrationForm()
+
+    return render(request, 'user_account/user_registration.html', {'register_form': register_form, 'type': 'Register'})
+
+
+def user_profile(request):
+    # user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile = UserProfile.objects.get(user=request.user)
+    print('USER PROFILE:', user_profile)
+
+    return render(request, 'user_account/user_profile.html', {'user_profile': user_profile})
 
 
 def user_login(request):

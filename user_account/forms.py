@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import UserProfile
 
 
 
@@ -21,6 +22,45 @@ class RegistrationForm(UserCreationForm):
     mailing_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Address'}))
     image = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': input_class, 'id':'required', 'placeholder': 'Upload Profile Picture'}))
 
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        
+        if commit:
+            user.save()
+
+            # Check if the user already has a UserProfile
+            try:
+                profile = UserProfile.objects.get(user=user)
+            except UserProfile.DoesNotExist:
+                # If no profile exists, create a new one
+                profile = UserProfile.objects.create(
+                    user=user,
+                    username=user.username,
+                    first_name=user.first_name,
+                    middle_name=user.middle_name,
+                    last_name=user.last_name,
+                    email_address=user.email,
+                    phone_number=user.phone_number,
+                    mailing_address=self.cleaned_data['mailing_address'],
+                    image=self.cleaned_data['image'] if 'image' in self.cleaned_data else None
+                )
+            else:
+                # If profile exists, update the fields
+                profile.username = user.username
+                profile.first_name = user.first_name
+                profile.last_name = user.last_name
+                profile.email_address = user.email
+                profile.mailing_address = self.cleaned_data['mailing_address']
+                if 'image' in self.cleaned_data and self.cleaned_data['image']:
+                    profile.image = self.cleaned_data['image']
+            profile.save()
+        
+        return user
+    
 
 class CustomUserLoginForm(AuthenticationForm):
     username = forms.CharField( widget=forms.TextInput(attrs={'class': input_class, 'placeholder': 'Username'}))

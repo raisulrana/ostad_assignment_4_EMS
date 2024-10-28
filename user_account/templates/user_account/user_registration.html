@@ -10,7 +10,7 @@
 
   <body>
     <div class="flex items-center justify-center min-h-screen">
-      <form class="max-w-sm mx-auto" method="POST" style="width: 50%;">
+      <form class="max-w-sm mx-auto" method="POST"  enctype="multipart/form-data" style="width: 50%;">
         <h1>{{ type }} Page</h1>
         {% csrf_token %}
         <div class="mb-5">
