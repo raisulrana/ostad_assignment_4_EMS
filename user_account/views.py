@@ -3,31 +3,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserLoginForm, RegistrationForm
 from .models import UserProfile
+from django.contrib.auth.models import User
+from .forms import UserProfileForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
-
-# def user_registration(request):
-#     if request.method == 'POST':
-#         register_form = RegistrationForm(request.POST)
-#         if register_form.is_valid():
-#             user = register_form.save()
-#             # Create a new user profile for the user
-#             user_profile = UserProfile(user=user)
-#             user_profile.username = request.POST.get('username')
-#             user_profile.first_name = request.POST.get('first_name')
-#             user_profile.middle_name = request.POST.get('middle_name')
-#             user_profile.last_name = request.POST.get('last_name')
-#             user_profile.email_address = request.POST.get('email')
-#             user_profile.mailing_address = request.POST.get('mailing_address')
-#             if register_form.cleaned_data.get('image'):
-#                 user_profile.image = register_form.cleaned_data.get('image')
-#             user_profile.save()
-#             return redirect('user_login')
-#     else:
-#         register_form = RegistrationForm()
-#     return render(request, 'user_account/user_registration.html', {'register_form': register_form, 'type': 'Register'})
-
 
 def user_registration(request):
     if request.method == 'POST':
@@ -41,12 +21,37 @@ def user_registration(request):
     return render(request, 'user_account/user_registration.html', {'register_form': register_form, 'type': 'Register'})
 
 
-def user_profile(request):
-    # user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    user_profile = UserProfile.objects.get(user=request.user)
-    print('USER PROFILE:', user_profile)
+def user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+        user_profile = UserProfile.objects.get(user=user)
+        return render(request, 'user_account/user_profile.html', {'user_profile': user_profile, 'person': user})
+    except User.DoesNotExist:
+        logout(request)
+        return render(request, 'user_account/not_found.html')
 
-    return render(request, 'user_account/user_profile.html', {'user_profile': user_profile})
+
+@login_required
+def update_user_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+        user_profile = UserProfile.objects.get(user=user)
+
+        if request.method == 'POST':
+            update_profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+            context = {'update_profile_form': update_profile_form, 'user_profile': user_profile, 'person': user}
+            if update_profile_form.is_valid():
+                update_profile_form.save()
+                return redirect('user_profile', username=user.username)
+            else:
+                return render(request, 'user_account/update_user_profile.html', context)
+        else:
+            update_profile_form = UserProfileForm(instance=user_profile)
+            context = {'update_profile_form': update_profile_form, 'user_profile': user_profile, 'person': user}
+            return render(request, 'user_account/update_user_profile.html', context)
+    except User.DoesNotExist:
+        logout(request)
+        return render(request, 'user_account/not_found.html')
 
 
 def user_login(request):

@@ -60,7 +60,15 @@ class RegistrationForm(UserCreationForm):
             profile.save()
         
         return user
-    
+
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'middle_name', 'last_name', 'email_address', 'phone_number', 'mailing_address', 'image']
+
+
 
 class CustomUserLoginForm(AuthenticationForm):
     username = forms.CharField( widget=forms.TextInput(attrs={'class': input_class, 'placeholder': 'Username'}))
