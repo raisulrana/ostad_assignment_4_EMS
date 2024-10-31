@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # "compressor",
     # "user_account",
     'user_account.apps.UserAccountConfig',
+    'categories',
+    'events',
 ]
 
 MIDDLEWARE = [
