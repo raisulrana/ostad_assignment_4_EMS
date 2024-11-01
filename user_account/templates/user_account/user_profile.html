@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <div class="justify-center items-center min-h-screen">
+    <div class="w-full max-w-4xl">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
+              <td class="px-6 py-4">
+                <img class="rounded w-64 h-64" src="{{ user_profile.image.url }}" alt="Extra large avatar" />
+              </td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Username:</th>
+              <td class="px-6 py-4">{{ user_profile.username }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">First Name:</th>
+              <td class="px-6 py-4">{{ user_profile.first_name }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Middle Name:</th>
+              <td class="px-6 py-4">{{ user_profile.middle_name }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Last Name:</th>
+              <td class="px-6 py-4">{{ user_profile.last_name }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Email Address:</th>
+              <td class="px-6 py-4">{{ user_profile.email_address }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Phone Number:</th>
+              <td class="px-6 py-4">{{ user_profile.phone_number }}</td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Address:</th>
+              <td class="px-6 py-4">{{ user_profile.mailing_address }}</td>
+            </tr>
+          </tbody>
+          <td class="px-6 py-4 text-right">
+            <button type="submit" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="{% url 'update_user_profile' user_profile.username %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a></button>
+          </td>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
