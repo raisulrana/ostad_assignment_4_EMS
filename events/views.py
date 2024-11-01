@@ -8,8 +8,9 @@ def add_event(request):
         event_form = EventForm(request.POST)
         if event_form.is_valid():
             event_form.save()
-            return redirect('add_event')
-        
+            return redirect('homepage')
+        else:
+            event_form = EventForm()
     else:
         event_form = EventForm()
         
@@ -24,7 +25,8 @@ def edit_event(request, id):
         if event_form.is_valid():
             event_form.save()
             return redirect('add_event')
-        
+        else:
+            event_form = EventForm()
     else:
         event_form = EventForm()
         

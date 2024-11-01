@@ -25,6 +25,7 @@ urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("user-account/", include("user_account.urls")),
     path("category/", include("categories.urls")),
+    path("events/", include("events.urls")),
 ]
 
 if settings.DEBUG:

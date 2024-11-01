@@ -6,9 +6,10 @@ from categories.models import Category
 
 class Event(models.Model):
     title = models.CharField(max_length=50)
-    content = models.TextField()
+    description = models.TextField()
     category = models.ManyToManyField(Category)
     event_author = models.ForeignKey(User, on_delete=models.CASCADE)
+    location = models.CharField(max_length=50, null=True, blank=True)
     event_created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     event_updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     event_ended_at = models.DateTimeField(null=True, blank=True)
