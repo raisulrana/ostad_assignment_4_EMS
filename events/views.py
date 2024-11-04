@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Event, Category
+from django.http import HttpResponseForbidden
 from .forms import EventForm
 from django.contrib.auth.decorators import login_required
 
@@ -38,6 +39,24 @@ def edit_event(request, id):
         event_form = EventForm()
         
     return render(request, 'add_event.html',{'form': event_form})
+
+# @login_required
+# def edit_event(request, id):
+#     edit_event = get_object_or_404(Event, pk=id)
+    
+#     # Check if the user is the creator or an admin
+#     if request.user != edit_event.created_by and not request.user.is_staff:
+#         return HttpResponseForbidden("You do not have permission to edit this event.")
+
+#     if request.method == 'POST':
+#         event_form = EventForm(request.POST, instance=edit_event)
+#         if event_form.is_valid():
+#             event_form.save()
+#             return redirect('homepage')
+#     else:
+#         event_form = EventForm(instance=edit_event)
+    
+#     return render(request, 'events/add_event.html', {'form': event_form})
 
 @login_required
 def delete_event(request, id):
