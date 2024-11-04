@@ -38,9 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "compressor",
-    # "user_account",
-    'user_account.apps.UserAccountConfig',
+    'user_account',
     'categories',
     'events',
 ]
