@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Event, Category
+from .models import Event, Category, Booking
 from .forms import EventForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
-from .models import Event, Booking
+
 
 # Create your views here.
 @login_required
@@ -68,3 +68,22 @@ def book_event(request, id):
 def user_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'events/user_bookings.html', {'bookings': bookings})
+
+
+#     query = request.GET.get('q', '')
+#     category_id = request.GET.get('category', None)
+#     events = Event.objects.all()
+
+#     if query:
+#         events = events.filter(title__icontains=query)
+
+#     if category_id:
+#         events = events.filter(category_id=category_id)
+
+#     categories = Category.objects.all()  # Retrieve categories again for the template
+
+#     return render(request, 'index.html', {'events': events, 'categories': categories})
+
+
+
+

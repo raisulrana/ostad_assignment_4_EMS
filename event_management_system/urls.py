@@ -26,6 +26,7 @@ urlpatterns = [
     path("user-account/", include("user_account.urls")),
     path("category/", include("categories.urls")),
     path("events/", include("events.urls")),
+    path("search/", views.search_view, name="search_view")
 ]
 
 if settings.DEBUG:

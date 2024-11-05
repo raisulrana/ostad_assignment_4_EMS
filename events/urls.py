@@ -8,5 +8,4 @@ urlpatterns = [
     path('delete-event/<int:id>', views.delete_event, name='delete_event'),
     path('book-event/<int:id>/', views.book_event, name='book_event'),
     path('user-bookings/', views.user_bookings, name='user_bookings'),
-
 ]
