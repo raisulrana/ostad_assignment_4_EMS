@@ -8,6 +8,7 @@
           <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#"><h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ event.title }}</h5></a>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ event.description }}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Location: {{ event.location }}</p>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Event Created By: {{ event.created_by }}</p>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Event Created At: {{ event.event_created_at }}</p>
             {% if user == event.created_by or user.is_staff %}
@@ -28,7 +29,7 @@
                 Please <a href="{% url 'user_login' %}" class="text-blue-500">log in</a> to book this event.
               </p>
             {% endif %}
-            
+
           </div>
         {% endfor %}
       </div>
