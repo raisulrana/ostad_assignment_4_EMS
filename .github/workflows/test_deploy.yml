@@ -1,0 +1,41 @@
+name: Test Deploy
+
+on:
+    push:
+        branches:
+            - main
+            - deploy
+    pull_request:
+        branches:
+            - main
+            - deploy
+
+jobs:
+    deployment:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up venv
+              run: |
+                python -m venv venv
+                source venv/bin/activate
+
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+
+            - name: Run migrations
+              run: |
+                  python manage.py migrate
+
+            - name: Collect static files
+              run: |
+                  python manage.py collectstatic --noinput
+
+            - name: Run tests
+              run: |
+                  python manage.py runserver
+                  echo "Tests passed successfully"

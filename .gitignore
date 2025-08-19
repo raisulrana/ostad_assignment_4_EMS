@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+
+# Virtual environment
+env/
+venv/
+.env/
+.venv/
+
+# Media and static files
+media/
+static_collected/
+staticfiles/
+
+# Database
+*.sqlite3
+
+# Development and testing files
+.DS_Store
+.vscode/
+.idea/
+
+# Sensitive data
+*.env
+local_settings.py
